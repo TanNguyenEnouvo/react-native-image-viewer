@@ -87,7 +87,7 @@ export default class ImageViewer extends React.Component<Props, State> {
 
     // 给 imageSizes 塞入空数组
     const imageSizes: IImageSize[] = [];
-    nextProps.imageUrls.forEach(imageUrl => {
+    nextProps.imageUrls.forEach((imageUrl) => {
       imageSizes.push({
         width: imageUrl.width || 0,
         height: imageUrl.height || 0,
@@ -178,24 +178,24 @@ export default class ImageViewer extends React.Component<Props, State> {
     let imageLoaded = false;
 
     // Tagged success if url is started with file:, or not set yet(for custom source.uri).
-    if (!image.url || image.url.startsWith(`file:`)) {
+    if (!image?.url || image?.url?.startsWith(`file:`)) {
       imageLoaded = true;
     }
 
     // 如果已知源图片宽高，直接设置为 success
-    if (image.width && image.height) {
+    if (image?.width && image?.height) {
       if (this.props.enablePreload && imageLoaded === false) {
-        Image.prefetch(image.url);
+        Image.prefetch(image?.url);
       }
-      imageStatus.width = image.width;
-      imageStatus.height = image.height;
+      imageStatus.width = image?.width;
+      imageStatus.height = image?.height;
       imageStatus.status = 'success';
       saveImageSize();
       return;
     }
 
     Image.getSize(
-      image.url,
+      image?.url,
       (width: number, height: number) => {
         imageStatus.width = width;
         imageStatus.height = height;
@@ -204,7 +204,7 @@ export default class ImageViewer extends React.Component<Props, State> {
       },
       () => {
         try {
-          const data = (Image as any).resolveAssetSource(image.props.source);
+          const data = (Image as any).resolveAssetSource(image?.props?.source);
           imageStatus.width = data.width;
           imageStatus.height = data.height;
           imageStatus.status = 'success';
@@ -538,7 +538,7 @@ export default class ImageViewer extends React.Component<Props, State> {
           return (
             <ImageZoom
               key={index}
-              ref={el => (this.imageRefs[index] = el)}
+              ref={(el) => (this.imageRefs[index] = el)}
               cropWidth={this.width}
               cropHeight={this.height}
               maxOverflow={this.props.maxOverflow}
